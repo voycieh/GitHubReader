@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Commit {
+class Commit: CustomStringConvertible {
     
     var sha: String
     var authorName: String?
@@ -30,7 +30,10 @@ class Commit {
                 }
             }
         }
-        
+    }
+    
+    var description: String {
+        return "Commit: \"\(sha)\", \"\(authorEmail)\""
     }
     
 }

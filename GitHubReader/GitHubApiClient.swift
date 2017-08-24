@@ -38,10 +38,7 @@ class GitHubApiClient {
         guard let url = URL(string: baseUrl + "users/\(user)/repos?per_page=\(pageSize)&page=\(page)") else { return }
         loadedPages.append(page)
         
-        var request = URLRequest(url: url)
-        if let base64 = "voycieh:a12345678".base64Encoded() {
-            request.addValue("Basic \(base64)", forHTTPHeaderField: "Authorization")
-        }
+        let request = self.prepareUrlRequest(url: url)
         Alamofire.request(request).responseJSON { (response) in
             if let json = response.result.value {
                 print("JSON: \(json)") // serialized json response
@@ -54,6 +51,35 @@ class GitHubApiClient {
                 }
             }
         }
+    }
+    
+    func commits(for user: String, repositoryName: String, completionHandler: @escaping ([Commit]) -> Void, failureHandler: @escaping (Error) -> Void) {
+        guard let url = URL(string: baseUrl + "repos/\(user)/\(repositoryName)/commits") else { return }
+        let request = self.prepareUrlRequest(url: url)
+        Alamofire.request(request).responseJSON { (response) in
+            if let json = response.result.value {
+                print("JSON: \(json)") // serialized json response
+                if json is Array<Any> {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "YYYY-MM-DDTHH:mm:ssZ"
+                    
+                    let commits = (json as! [[String: Any]]).map { Commit(data: $0, dateFormatter: dateFormatter) }
+                    completionHandler(commits)
+                } else {
+                    let er = ApiError.unexpectedResponse(response: String(data: response.data!, encoding: .utf8))
+                    failureHandler(er)
+                }
+            }
+        }
+
+    }
+    
+    private func prepareUrlRequest(url: URL) -> URLRequest {
+        var request = URLRequest(url: url)
+        if let base64 = "voycieh:a12345678".base64Encoded() {
+            request.addValue("Basic \(base64)", forHTTPHeaderField: "Authorization")
+        }
+        return request
     }
 
     static func downloadImage(url: String, completionHandler: @escaping (UIImage) -> Void) {

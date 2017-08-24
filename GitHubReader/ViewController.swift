@@ -53,6 +53,7 @@ class ViewController: UIViewController {
         if segue.destination is DetailViewController {
             let ctrl = segue.destination as! DetailViewController
             ctrl.repository = self.elementyTablicy[indexPath.row]
+            ctrl.apiClient = self.apiClient
         }
     }
     

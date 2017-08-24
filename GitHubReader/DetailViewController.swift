@@ -11,6 +11,9 @@ import UIKit
 class DetailViewController: UIViewController {
 
     var repository: GitHubRepository?
+    var apiClient: GitHubApiClient?
+    
+    var commits: [Commit] = []
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -24,12 +27,19 @@ class DetailViewController: UIViewController {
         self.title = self.repository?.name
         self.navigationController?.isNavigationBarHidden = false
         
+        guard let repositoryName = self.repository?.name else { return }
+        self.apiClient?.commits(for: AppSettings.shared.githubUser, repositoryName: repositoryName, completionHandler: { (commits) in
+            self.commits = commits
+            print(commits)
+        }, failureHandler: { (error) in
+            print(String(describing: error))
+        })
+        
         guard let avatarUrl = self.repository?.avatarUrl else { return }
         GitHubApiClient.downloadImage(url: avatarUrl) { [weak self] (image) in
             DispatchQueue.main.async {
                 self?.avatarImageView.image = image
             }
-            
         }
         
     }
