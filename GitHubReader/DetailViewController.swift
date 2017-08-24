@@ -18,7 +18,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-
+    @IBOutlet weak var commit: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.nameLabel.text = self.repository?.name
@@ -59,5 +60,28 @@ class DetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+
+}
+
+extension DetailViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.commits.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CommitCell", for: indexPath) as! CommitCell
+        let commit = self.commits[indexPath.row]
+        cell.shaLabel.text = commit.sha
+        
+        guard let authorName = commit.authorName, let authorEmail = commit.authorEmail else { return cell }
+        var authorString = NSAttributedString(string: "\(authorName) \(authorEmail)")
+        
+        
+        cell.authorLabel.attributedText = authorString
+        
+//        cell.textLabel?.text = self.commits[indexPath.row].name
+//        cell.detailTextLabel?.text = self.commits[indexPath.row].repDescription
+        
+        return cell
+    }
 
 }
