@@ -10,6 +10,7 @@
 		6022C5C21F4980C8006BFBC6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6022C5C11F4980C8006BFBC6 /* SettingsViewController.swift */; };
 		6022C5C41F498571006BFBC6 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6022C5C31F498571006BFBC6 /* AppSettings.swift */; };
 		6066BCB71F49B2EF00CD02AB /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066BCB61F49B2EF00CD02AB /* String+Extensions.swift */; };
+		6090B86F1F4F46C000205DAB /* Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6090B86E1F4F46C000205DAB /* Commit.swift */; };
 		60DCF0D31F4829EA00A5550A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DCF0D21F4829EA00A5550A /* AppDelegate.swift */; };
 		60DCF0D51F4829EA00A5550A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DCF0D41F4829EA00A5550A /* ViewController.swift */; };
 		60DCF0D81F4829EA00A5550A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60DCF0D61F4829EA00A5550A /* Main.storyboard */; };
@@ -44,6 +45,7 @@
 		6022C5C11F4980C8006BFBC6 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		6022C5C31F498571006BFBC6 /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		6066BCB61F49B2EF00CD02AB /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		6090B86E1F4F46C000205DAB /* Commit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Commit.swift; sourceTree = "<group>"; };
 		60DCF0CF1F4829EA00A5550A /* GitHubReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60DCF0D21F4829EA00A5550A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60DCF0D41F4829EA00A5550A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +102,43 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		6090B86A1F4F459800205DAB /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				60DCF0D41F4829EA00A5550A /* ViewController.swift */,
+				6022C5C11F4980C8006BFBC6 /* SettingsViewController.swift */,
+				60DCF1041F486D4C00A5550A /* DetailViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		6090B86B1F4F45DE00205DAB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				60DCF1021F483CF200A5550A /* GitHubRepositories.swift */,
+				6090B86E1F4F46C000205DAB /* Commit.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		6090B86C1F4F460300205DAB /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				60DCF0D61F4829EA00A5550A /* Main.storyboard */,
+				60DCF0DB1F4829EA00A5550A /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		6090B86D1F4F461F00205DAB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				60DCF0D91F4829EA00A5550A /* Assets.xcassets */,
+				60DCF0DE1F4829EA00A5550A /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		60DCF0C61F4829EA00A5550A = {
 			isa = PBXGroup;
 			children = (
@@ -125,17 +164,13 @@
 		60DCF0D11F4829EA00A5550A /* GitHubReader */ = {
 			isa = PBXGroup;
 			children = (
+				6090B86A1F4F459800205DAB /* Controllers */,
+				6090B86B1F4F45DE00205DAB /* Models */,
+				6090B86C1F4F460300205DAB /* Storyboards */,
+				6090B86D1F4F461F00205DAB /* Resources */,
 				60DCF0D21F4829EA00A5550A /* AppDelegate.swift */,
-				60DCF0D41F4829EA00A5550A /* ViewController.swift */,
 				6022C5C31F498571006BFBC6 /* AppSettings.swift */,
 				60DCF1001F48312600A5550A /* GitHubApiClient.swift */,
-				60DCF1021F483CF200A5550A /* GitHubRepositories.swift */,
-				60DCF0D61F4829EA00A5550A /* Main.storyboard */,
-				6022C5C11F4980C8006BFBC6 /* SettingsViewController.swift */,
-				60DCF0D91F4829EA00A5550A /* Assets.xcassets */,
-				60DCF0DB1F4829EA00A5550A /* LaunchScreen.storyboard */,
-				60DCF0DE1F4829EA00A5550A /* Info.plist */,
-				60DCF1041F486D4C00A5550A /* DetailViewController.swift */,
 				6066BCB61F49B2EF00CD02AB /* String+Extensions.swift */,
 			);
 			path = GitHubReader;
@@ -355,6 +390,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6090B86F1F4F46C000205DAB /* Commit.swift in Sources */,
 				60DCF1011F48312600A5550A /* GitHubApiClient.swift in Sources */,
 				60DCF0D51F4829EA00A5550A /* ViewController.swift in Sources */,
 				6022C5C41F498571006BFBC6 /* AppSettings.swift in Sources */,
