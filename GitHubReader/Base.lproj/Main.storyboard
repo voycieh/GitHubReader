@@ -155,7 +155,7 @@
                                         <rect key="frame" x="0.0" y="28" width="343" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9rM-po-BMA" id="mvf-yD-efb">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WDV-C1-qjl">
@@ -268,14 +268,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pOi-GD-ASf">
+                                <rect key="frame" x="20" y="581" width="335" height="34"/>
+                                <state key="normal" title="Url request parameters">
+                                    <color key="titleColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="dR9-Kt-uts" kind="presentation" id="1aq-9Y-ftb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="pOi-GD-ASf" secondAttribute="trailing" constant="20" id="63L-g1-43J"/>
                             <constraint firstAttribute="trailing" secondItem="WoM-dG-SLm" secondAttribute="trailing" constant="16" id="9rC-ec-Cll"/>
                             <constraint firstAttribute="trailing" secondItem="vKM-oQ-kUy" secondAttribute="trailing" constant="16" id="JhT-sm-xU5"/>
                             <constraint firstItem="P5t-Zr-o6V" firstAttribute="top" secondItem="G3a-fZ-rpQ" secondAttribute="bottom" id="KE4-i9-b62"/>
+                            <constraint firstItem="Hqh-NJ-3SG" firstAttribute="top" secondItem="pOi-GD-ASf" secondAttribute="bottom" constant="8" id="LCp-pE-u7H"/>
                             <constraint firstItem="1ly-5c-VP4" firstAttribute="top" secondItem="P5t-Zr-o6V" secondAttribute="bottom" constant="16" id="M8x-9o-QMy"/>
                             <constraint firstAttribute="trailing" secondItem="P5t-Zr-o6V" secondAttribute="trailing" id="ObI-zS-c7e"/>
+                            <constraint firstItem="pOi-GD-ASf" firstAttribute="leading" secondItem="SlW-Pc-WBg" secondAttribute="leading" constant="20" id="QpU-pW-BWl"/>
                             <constraint firstItem="mbT-MK-iZj" firstAttribute="top" secondItem="1ly-5c-VP4" secondAttribute="bottom" constant="8" id="Tl1-MP-tab"/>
                             <constraint firstItem="WoM-dG-SLm" firstAttribute="leading" secondItem="mbT-MK-iZj" secondAttribute="trailing" constant="16" id="Zs9-TM-hYd"/>
                             <constraint firstItem="vKM-oQ-kUy" firstAttribute="top" secondItem="1ly-5c-VP4" secondAttribute="top" id="cvb-0T-Tge"/>
@@ -288,13 +300,7 @@
                             <constraint firstItem="vKM-oQ-kUy" firstAttribute="bottom" secondItem="1ly-5c-VP4" secondAttribute="bottom" id="ytE-Zy-UYk"/>
                         </constraints>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem title="url request parameters" id="WWd-aW-RXN">
-                            <connections>
-                                <segue destination="dR9-Kt-uts" kind="presentation" id="4lx-y3-8jN"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="gitHubUsername" destination="vKM-oQ-kUy" id="REA-9O-Zjx"/>
@@ -303,12 +309,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="huU-Iu-hrp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="926" y="-555"/>
+            <point key="canvasLocation" x="925.60000000000002" y="-555.47226386806597"/>
         </scene>
         <!--Parameters Req View Controller-->
         <scene sceneID="FLa-z0-LTB">
             <objects>
-                <viewController title="Parameters Req View Controller" id="dR9-Kt-uts" sceneMemberID="viewController">
+                <viewController title="Parameters Req View Controller" id="dR9-Kt-uts" customClass="ParametersReqViewController" customModule="GitHubReader" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fph-hS-sCV"/>
                         <viewControllerLayoutGuide type="bottom" id="Qmr-cu-YBw"/>
@@ -352,11 +358,15 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="login" destination="bgs-lr-Yvb" id="aZQ-0o-vcC"/>
+                        <outlet property="password" destination="dIU-t1-RSm" id="HJE-Pi-bAa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WB5-l7-akb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
