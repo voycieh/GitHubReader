@@ -33,7 +33,17 @@ class CreateRepositoryViewController: UIViewController {
         self.apiClient?.createRepository(name: name, description: self.descriptionTextView.text, isPrivate: self.privateSwitch.isOn, completionHandler: { (repository) in
             print(repository)
         }, failureHandler: { (error) in
-            print(String(describing: error))
+            if error is ApiError {
+                let er = error as! ApiError
+                switch er {
+                case .githubError(let error):
+                    let alert = UIAlertController(title: "Error", message: error.message, preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(okAction)
+                    self.present(alert, animated: true, completion: nil)
+                default: print(er)
+                }
+            }
         })
     }
     /*

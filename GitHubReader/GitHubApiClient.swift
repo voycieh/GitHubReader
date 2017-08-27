@@ -13,6 +13,7 @@ import UIKit.UIImage
 enum ApiError: Error {
     
     case unexpectedResponse(response: String?)
+    case githubError(error: GitHubError)
     
 }
 
@@ -106,18 +107,21 @@ class GitHubApiClient {
         params["private"] = isPrivate
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
 
-        if let body = request.httpBody {
-            print(String(data: body, encoding: .utf8))
-        } else {
-            print("EMPTY httpBody")
-        }
+//        if let body = request.httpBody {
+//            print(String(data: body, encoding: .utf8))
+//        } else {
+//            print("EMPTY httpBody")
+//        }
         
         Alamofire.request(request).responseJSON { (response) in
             if let json = response.result.value {
-                //                print("JSON: \(json)") // serialized json response
-                if json is Dictionary<String, Any> && response.response?.statusCode == 201 {
-                    let repository = GitHubRepository(data: (json as! [String: Any]))
-                    completionHandler(repository)
+                if json is Dictionary<String, Any> {
+                    if response.response?.statusCode == 201 {
+                        let repository = GitHubRepository(data: (json as! [String: Any]))
+                        completionHandler(repository)
+                    } else {
+                        self.githubFailure(data: json as! [String: Any], failureHandler: failureHandler)
+                    }
                 } else {
                     let er = ApiError.unexpectedResponse(response: String(data: response.data!, encoding: .utf8))
                     failureHandler(er)
@@ -125,6 +129,11 @@ class GitHubApiClient {
             }
         }
         
+    }
+    
+    func githubFailure(data: [String: Any], failureHandler: @escaping (Error) -> Void) {
+        let githubError = GitHubError(data: data)
+        failureHandler(ApiError.githubError(error: githubError))
     }
     
     private func prepareUrlRequest(url: URL) -> URLRequest {
