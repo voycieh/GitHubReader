@@ -14,6 +14,7 @@ class DetailViewController: UIViewController {
     var apiClient: GitHubApiClient?
     
     var commits: [Commit] = []
+    var branches: [Branch] = []
     let authorStringAttributes = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 15.0)]
     
     @IBOutlet weak var avatarImageView: UIImageView!
@@ -29,14 +30,7 @@ class DetailViewController: UIViewController {
         self.title = self.repository?.name
         self.navigationController?.isNavigationBarHidden = false
         
-        guard let repositoryName = self.repository?.name else { return }
-        self.apiClient?.commits(for: AppSettings.shared.githubUser, repositoryName: repositoryName, completionHandler: { (commits) in
-            self.commits = commits
-            self.commit.reloadData()
-            print(commits)
-        }, failureHandler: { (error) in
-            print(String(describing: error))
-        })
+        self.getBranches()
         
         guard let avatarUrl = self.repository?.avatarUrl else { return }
         GitHubApiClient.downloadImage(url: avatarUrl) { [weak self] (image) in
@@ -52,7 +46,29 @@ class DetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    func failure(error: Error) {
+        print(String(describing: error))
+    }
+    
+    private func getBranches() {
+        guard let repositoryName = self.repository?.name else { return }
+        self.apiClient?.branches(for: AppSettings.shared.githubUser, repositoryName: repositoryName, completionHandler: { (branches) in
+            self.branches = branches
+            if let branch = branches.first {
+                self.commits(for: branch)
+            }
+        }, failureHandler: self.failure)
+    }
+    
+    private func commits(for branch: Branch) {
+        guard let repositoryName = self.repository?.name else { return }
+        print(branch)
+        self.apiClient?.commits(for: AppSettings.shared.githubUser, repositoryName: repositoryName, branchName: branch.name, completionHandler: { (commits) in
+            self.commits = commits
+            self.commit.reloadData()
+//            print(commits)
+        }, failureHandler: self.failure)
+    }
     /*
     // MARK: - Navigation
 

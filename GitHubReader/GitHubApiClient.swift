@@ -41,7 +41,7 @@ class GitHubApiClient {
         let request = self.prepareUrlRequest(url: url)
         Alamofire.request(request).responseJSON { (response) in
             if let json = response.result.value {
-                print("JSON: \(json)") // serialized json response
+//                print("JSON: \(json)") // serialized json response
                 if json is Array<Any> {
                     let repositories = (json as! [[String: Any]]).map { GitHubRepository(data: $0) }
                     completionHandler(repositories)
@@ -53,12 +53,17 @@ class GitHubApiClient {
         }
     }
     
-    func commits(for user: String, repositoryName: String, completionHandler: @escaping ([Commit]) -> Void, failureHandler: @escaping (Error) -> Void) {
-        guard let url = URL(string: baseUrl + "repos/\(user)/\(repositoryName)/commits") else { return }
+    func commits(for user: String, repositoryName: String, branchName: String? = nil, completionHandler: @escaping ([Commit]) -> Void, failureHandler: @escaping (Error) -> Void) {
+        var urlPath = "repos/\(user)/\(repositoryName)/commits"
+        if let branch = branchName {
+            urlPath += "?sha=\(branch)"
+        }
+        
+        guard let url = URL(string: baseUrl + urlPath) else { return }
         let request = self.prepareUrlRequest(url: url)
         Alamofire.request(request).responseJSON { (response) in
             if let json = response.result.value {
-                print("JSON: \(json)") // serialized json response
+//                print("JSON: \(json)") // serialized json response
                 if json is Array<Any> {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
@@ -72,6 +77,24 @@ class GitHubApiClient {
             }
         }
 
+    }
+    
+    func branches(for user: String, repositoryName: String, completionHandler: @escaping ([Branch]) -> Void, failureHandler: @escaping (Error) -> Void) {
+        guard let url = URL(string: baseUrl + "repos/\(user)/\(repositoryName)/branches") else { return }
+        let request = self.prepareUrlRequest(url: url)
+        Alamofire.request(request).responseJSON { (response) in
+            if let json = response.result.value {
+//                print("JSON: \(json)") // serialized json response
+                if json is Array<Any> {
+                    let branches = (json as! [[String: Any]]).map { Branch(data: $0) }
+                    completionHandler(branches)
+                } else {
+                    let er = ApiError.unexpectedResponse(response: String(data: response.data!, encoding: .utf8))
+                    failureHandler(er)
+                }
+            }
+        }
+        
     }
     
     private func prepareUrlRequest(url: URL) -> URLRequest {
