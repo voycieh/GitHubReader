@@ -33,7 +33,7 @@ class Commit: CustomStringConvertible {
     }
     
     var description: String {
-        return "Commit: \"\(sha)\", \"\(authorEmail)\""
+        return "Commit: \"\(sha)\", \"\(String(describing: authorEmail))\""
     }
     
 }

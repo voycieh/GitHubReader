@@ -61,7 +61,7 @@ class GitHubApiClient {
                 print("JSON: \(json)") // serialized json response
                 if json is Array<Any> {
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "YYYY-MM-DDTHH:mm:ssZ"
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
                     
                     let commits = (json as! [[String: Any]]).map { Commit(data: $0, dateFormatter: dateFormatter) }
                     completionHandler(commits)

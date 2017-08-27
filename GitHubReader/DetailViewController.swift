@@ -14,6 +14,7 @@ class DetailViewController: UIViewController {
     var apiClient: GitHubApiClient?
     
     var commits: [Commit] = []
+    let authorStringAttributes = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 15.0)]
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -31,6 +32,7 @@ class DetailViewController: UIViewController {
         guard let repositoryName = self.repository?.name else { return }
         self.apiClient?.commits(for: AppSettings.shared.githubUser, repositoryName: repositoryName, completionHandler: { (commits) in
             self.commits = commits
+            self.commit.reloadData()
             print(commits)
         }, failureHandler: { (error) in
             print(String(describing: error))
@@ -73,13 +75,22 @@ extension DetailViewController: UITableViewDataSource {
         cell.shaLabel.text = commit.sha
         
         guard let authorName = commit.authorName, let authorEmail = commit.authorEmail else { return cell }
-        var authorString = NSAttributedString(string: "\(authorName) \(authorEmail)")
-        
-        
+        let authorString = NSMutableAttributedString(string: "\(authorName) \(authorEmail)")
+        let nameRange = NSRange(location: 0, length: authorName.characters.count)
+        authorString.addAttributes(self.authorStringAttributes, range: nameRange)
         cell.authorLabel.attributedText = authorString
         
-//        cell.textLabel?.text = self.commits[indexPath.row].name
-//        cell.detailTextLabel?.text = self.commits[indexPath.row].repDescription
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        
+        if let date = commit.date {
+            cell.dateLabel.text = dateFormatter.string(from: date)
+        }
+        
+        cell.messageLabel.text = commit.message ?? ""
+        //commit.message != nil ? commit.message! : ""
+        
         
         return cell
     }
