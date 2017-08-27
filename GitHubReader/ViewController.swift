@@ -47,12 +47,17 @@ class ViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let cell = sender as? UITableViewCell,
-              let indexPath = self.tableView.indexPath(for: cell)
-            else { return }
         if segue.destination is DetailViewController {
+            guard let cell = sender as? UITableViewCell,
+                let indexPath = self.tableView.indexPath(for: cell)
+                else { return }
             let ctrl = segue.destination as! DetailViewController
             ctrl.repository = self.elementyTablicy[indexPath.row]
+            ctrl.apiClient = self.apiClient
+        }
+        
+        if segue.destination is CreateRepositoryViewController {
+            let ctrl = segue.destination as! CreateRepositoryViewController
             ctrl.apiClient = self.apiClient
         }
     }

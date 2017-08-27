@@ -122,7 +122,6 @@ extension DetailViewController: UITableViewDataSource {
         cell.messageLabel.text = commit.message ?? ""
         //commit.message != nil ? commit.message! : ""
         
-        
         return cell
     }
 

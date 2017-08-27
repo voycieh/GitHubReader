@@ -97,6 +97,36 @@ class GitHubApiClient {
         
     }
     
+    func createRepository(name: String, description: String?, isPrivate: Bool? = false, completionHandler: @escaping (GitHubRepository) -> Void, failureHandler: @escaping (Error) -> Void) {
+        guard let url = URL(string: baseUrl + "user/repos") else { return }
+        var request = self.prepareUrlRequest(url: url)
+        request.httpMethod = "POST"
+        var params: [String: Any] = ["name": name]
+        params["description"] = description
+        params["private"] = isPrivate
+        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+
+        if let body = request.httpBody {
+            print(String(data: body, encoding: .utf8))
+        } else {
+            print("EMPTY httpBody")
+        }
+        
+        Alamofire.request(request).responseJSON { (response) in
+            if let json = response.result.value {
+                //                print("JSON: \(json)") // serialized json response
+                if json is Dictionary<String, Any> && response.response?.statusCode == 201 {
+                    let repository = GitHubRepository(data: (json as! [String: Any]))
+                    completionHandler(repository)
+                } else {
+                    let er = ApiError.unexpectedResponse(response: String(data: response.data!, encoding: .utf8))
+                    failureHandler(er)
+                }
+            }
+        }
+        
+    }
+    
     private func prepareUrlRequest(url: URL) -> URLRequest {
         var request = URLRequest(url: url)
         if let base64 = "voycieh:a12345678".base64Encoded() {

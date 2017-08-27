@@ -12,6 +12,7 @@
 		604E24441F4F57F000A308B9 /* CommitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604E24431F4F57F000A308B9 /* CommitCell.swift */; };
 		606257FF1F52C8C40068029B /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606257FE1F52C8C40068029B /* Branch.swift */; };
 		606258011F52D59C0068029B /* BranchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606258001F52D59C0068029B /* BranchListViewController.swift */; };
+		606258031F52F8DB0068029B /* CreateRepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606258021F52F8DB0068029B /* CreateRepositoryViewController.swift */; };
 		6066BCB71F49B2EF00CD02AB /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066BCB61F49B2EF00CD02AB /* String+Extensions.swift */; };
 		6090B86F1F4F46C000205DAB /* Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6090B86E1F4F46C000205DAB /* Commit.swift */; };
 		60DCF0D31F4829EA00A5550A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DCF0D21F4829EA00A5550A /* AppDelegate.swift */; };
@@ -50,6 +51,9 @@
 		604E24431F4F57F000A308B9 /* CommitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommitCell.swift; sourceTree = "<group>"; };
 		606257FE1F52C8C40068029B /* Branch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
 		606258001F52D59C0068029B /* BranchListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BranchListViewController.swift; sourceTree = "<group>"; };
+		606258021F52F8DB0068029B /* CreateRepositoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateRepositoryViewController.swift; sourceTree = "<group>"; };
+		606258041F52FB300068029B /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Main.strings; sourceTree = "<group>"; };
+		606258051F52FB300068029B /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		6066BCB61F49B2EF00CD02AB /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		6090B86E1F4F46C000205DAB /* Commit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Commit.swift; sourceTree = "<group>"; };
 		60DCF0CF1F4829EA00A5550A /* GitHubReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +119,7 @@
 				6022C5C11F4980C8006BFBC6 /* SettingsViewController.swift */,
 				60DCF1041F486D4C00A5550A /* DetailViewController.swift */,
 				606258001F52D59C0068029B /* BranchListViewController.swift */,
+				606258021F52F8DB0068029B /* CreateRepositoryViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -402,6 +407,7 @@
 				6090B86F1F4F46C000205DAB /* Commit.swift in Sources */,
 				60DCF1011F48312600A5550A /* GitHubApiClient.swift in Sources */,
 				60DCF0D51F4829EA00A5550A /* ViewController.swift in Sources */,
+				606258031F52F8DB0068029B /* CreateRepositoryViewController.swift in Sources */,
 				6022C5C41F498571006BFBC6 /* AppSettings.swift in Sources */,
 				604E24441F4F57F000A308B9 /* CommitCell.swift in Sources */,
 				606257FF1F52C8C40068029B /* Branch.swift in Sources */,
@@ -450,6 +456,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				60DCF0D71F4829EA00A5550A /* Base */,
+				606258041F52FB300068029B /* pl */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -458,6 +465,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				60DCF0DC1F4829EA00A5550A /* Base */,
+				606258051F52FB300068029B /* pl */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -469,6 +477,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -519,6 +528,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -565,10 +575,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4E2D5R2H67;
 				INFOPLIST_FILE = GitHubReader/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = pl.wojciechpelc.GitHubReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -579,10 +591,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4E2D5R2H67;
 				INFOPLIST_FILE = GitHubReader/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = pl.wojciechpelc.GitHubReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

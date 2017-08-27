@@ -1,0 +1,51 @@
+
+/* Class = "UILabel"; text = "Nazwa repozytorium"; ObjectID = "0K0-sY-UKW"; */
+"0K0-sY-UKW.text" = "Nazwa repozytorium";
+
+/* Class = "UILabel"; text = "GitHub Username"; ObjectID = "1ly-5c-VP4"; */
+"1ly-5c-VP4.text" = "GitHub Username";
+
+/* Class = "UILabel"; text = "Nazwa repozytorium"; ObjectID = "ArR-81-Bmy"; */
+"ArR-81-Bmy.text" = "Nazwa repozytorium";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "Bba-91-ilM"; */
+"Bba-91-ilM.text" = "Description";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "DGX-t7-xeF"; */
+"DGX-t7-xeF.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "ESb-wR-5MP"; */
+"ESb-wR-5MP.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "EiW-VE-EDl"; */
+"EiW-VE-EDl.text" = "Label";
+
+/* Class = "UILabel"; text = "Opis"; ObjectID = "MjF-EG-60N"; */
+"MjF-EG-60N.text" = "Opis";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "WDV-C1-qjl"; */
+"WDV-C1-qjl.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Create new repository"; ObjectID = "Z1X-ov-gGx"; */
+"Z1X-ov-gGx.normalTitle" = "Create new repository";
+
+/* Class = "UILabel"; text = "Opis repozytorium"; ObjectID = "ZNb-a5-yGv"; */
+"ZNb-a5-yGv.text" = "Opis repozytorium";
+
+/* Class = "UILabel"; text = "Is private?"; ObjectID = "ZjW-CP-3hU"; */
+"ZjW-CP-3hU.text" = "Is private?";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "f1z-fC-bTR"; */
+"f1z-fC-bTR.text" = "Name";
+
+/* Class = "UILabel"; text = "Page size"; ObjectID = "mbT-MK-iZj"; */
+"mbT-MK-iZj.text" = "Page size";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "nfs-ML-TU9"; */
+"nfs-ML-TU9.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "riY-ye-hdV"; */
+"riY-ye-hdV.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "yui-HE-tRg"; */
+"yui-HE-tRg.text" = "Title";
