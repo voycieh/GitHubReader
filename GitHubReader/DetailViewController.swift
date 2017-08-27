@@ -15,12 +15,18 @@ class DetailViewController: UIViewController {
     
     var commits: [Commit] = []
     var branches: [Branch] = []
+    var selectedBranch: Branch? {
+        didSet {
+            self.branchButton.setTitle(selectedBranch?.name ?? "", for: .normal)
+        }
+    }
     let authorStringAttributes = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 15.0)]
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var commit: UITableView!
+    @IBOutlet weak var branchButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,12 +61,13 @@ class DetailViewController: UIViewController {
         self.apiClient?.branches(for: AppSettings.shared.githubUser, repositoryName: repositoryName, completionHandler: { (branches) in
             self.branches = branches
             if let branch = branches.first {
+                self.selectedBranch = branch
                 self.commits(for: branch)
             }
         }, failureHandler: self.failure)
     }
     
-    private func commits(for branch: Branch) {
+    fileprivate func commits(for branch: Branch) {
         guard let repositoryName = self.repository?.name else { return }
         print(branch)
         self.apiClient?.commits(for: AppSettings.shared.githubUser, repositoryName: repositoryName, branchName: branch.name, completionHandler: { (commits) in
@@ -69,15 +76,23 @@ class DetailViewController: UIViewController {
 //            print(commits)
         }, failureHandler: self.failure)
     }
-    /*
+    
+    @IBAction func branchButtonTap(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "BranchSegue", sender: sender)
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.destination is BranchListViewController {
+            let ctrl = segue.destination as! BranchListViewController
+            ctrl.branches = self.branches
+            ctrl.selectedBranch = self.selectedBranch
+            ctrl.listDelegate = self
+        }
     }
-    */
+    
 
 }
 
@@ -112,3 +127,11 @@ extension DetailViewController: UITableViewDataSource {
     }
 
 }
+
+extension DetailViewController: BranchListDelegate {
+    func didSelect(branch: Branch) {
+        self.selectedBranch = branch
+        self.commits(for: self.selectedBranch!)
+    }
+}
+
