@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -258,6 +257,7 @@
                         <segue destination="iCL-rg-Mxe" kind="popoverPresentation" identifier="BranchSegue" popoverAnchorView="riY-ye-hdV" id="FFR-by-gfY">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
+                        <segue destination="9t5-3y-fPY" kind="show" identifier="EditSegue" id="WFg-PY-bTp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PxB-4k-3Iq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -469,4 +469,7 @@
             <point key="canvasLocation" x="926" y="-555"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="WFg-PY-bTp"/>
+    </inferredMetricsTieBreakers>
 </document>

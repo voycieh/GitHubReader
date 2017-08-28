@@ -12,6 +12,8 @@ class GitHubRepository: CustomStringConvertible {
     var name: String = ""
     var repDescription: String?
     var avatarUrl: String?
+    var isAdmin = false
+    var isPrivate = false
     
     init(data: [String: Any]) {
         self.name = data["name"] as! String
@@ -23,6 +25,13 @@ class GitHubRepository: CustomStringConvertible {
             let url = owner["avatar_url"] as? String {
             self.avatarUrl = url
         }
+        
+        if let permissions = data["permissions"] as? [String: Any],
+            let isAdmin = permissions["admin"] as? Bool {
+            self.isAdmin = isAdmin
+        }
+        
+        self.isPrivate = data["private"] as? Bool ?? false
     }
     
     var description: String {

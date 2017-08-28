@@ -98,6 +98,18 @@ class GitHubApiClient {
         
     }
     
+    func editRepository(repository: GitHubRepository, oldName: String, owner: String, completionHandler: @escaping (GitHubRepository) -> Void, failureHandler: @escaping (Error) -> Void) {
+        guard let url = URL(string: baseUrl + "repos/\(owner)/\(oldName)") else { return }
+        var request = self.prepareUrlRequest(url: url)
+        request.httpMethod = "PATCH"
+        var params: [String: Any] = ["name": repository.name]
+        params["description"] = repository.repDescription
+        params["private"] = repository.isPrivate
+        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+        
+        self.performRepoRequest(request: request, completionHandler: completionHandler, failureHandler: failureHandler)
+    }
+    
     func createRepository(name: String, description: String?, isPrivate: Bool? = false, completionHandler: @escaping (GitHubRepository) -> Void, failureHandler: @escaping (Error) -> Void) {
         guard let url = URL(string: baseUrl + "user/repos") else { return }
         var request = self.prepareUrlRequest(url: url)
@@ -106,17 +118,15 @@ class GitHubApiClient {
         params["description"] = description
         params["private"] = isPrivate
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
-
-//        if let body = request.httpBody {
-//            print(String(data: body, encoding: .utf8))
-//        } else {
-//            print("EMPTY httpBody")
-//        }
         
+        self.performRepoRequest(request: request, completionHandler: completionHandler, failureHandler: failureHandler)
+    }
+    
+    private func performRepoRequest(request: URLRequest, completionHandler: @escaping (GitHubRepository) -> Void, failureHandler: @escaping (Error) -> Void) {
         Alamofire.request(request).responseJSON { (response) in
             if let json = response.result.value {
                 if json is Dictionary<String, Any> {
-                    if response.response?.statusCode == 201 {
+                    if (response.response?.statusCode)! < 300 {
                         let repository = GitHubRepository(data: (json as! [String: Any]))
                         completionHandler(repository)
                     } else {
@@ -128,7 +138,6 @@ class GitHubApiClient {
                 }
             }
         }
-        
     }
     
     func githubFailure(data: [String: Any], failureHandler: @escaping (Error) -> Void) {

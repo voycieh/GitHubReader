@@ -30,13 +30,14 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.nameLabel.text = self.repository?.name
-        self.descriptionLabel.text = self.repository?.repDescription
-        
-        self.title = self.repository?.name
         self.navigationController?.isNavigationBarHidden = false
         
         self.getBranches()
+        
+        if let isAdmin = self.repository?.isAdmin, isAdmin == true {
+            let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(presentEditForm(_:)))
+            self.navigationItem.rightBarButtonItem = editButton
+        }
         
         guard let avatarUrl = self.repository?.avatarUrl else { return }
         GitHubApiClient.downloadImage(url: avatarUrl) { [weak self] (image) in
@@ -44,7 +45,21 @@ class DetailViewController: UIViewController {
                 self?.avatarImageView.image = image
             }
         }
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.updateRepoUI()
+    }
+    
+    func presentEditForm(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "EditSegue", sender: sender)
+    }
+    
+    func updateRepoUI() {
+        self.nameLabel.text = self.repository?.name
+        self.descriptionLabel.text = self.repository?.repDescription
+        self.title = self.repository?.name
     }
 
     override func didReceiveMemoryWarning() {
@@ -90,6 +105,12 @@ class DetailViewController: UIViewController {
             ctrl.branches = self.branches
             ctrl.selectedBranch = self.selectedBranch
             ctrl.listDelegate = self
+        }
+        
+        if segue.destination is CreateRepositoryViewController {
+            let ctrl = segue.destination as! CreateRepositoryViewController
+            ctrl.repository = self.repository
+            ctrl.apiClient = self.apiClient
         }
     }
     

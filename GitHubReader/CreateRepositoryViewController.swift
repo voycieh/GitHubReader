@@ -11,6 +11,7 @@ import UIKit
 class CreateRepositoryViewController: UIViewController {
 
     var apiClient: GitHubApiClient?
+    var repository: GitHubRepository?
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -19,7 +20,15 @@ class CreateRepositoryViewController: UIViewController {
         super.viewDidLoad()
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAction(_:)))
-        self.title = NSLocalizedString("Create", comment: "Create repository constroller title")
+        
+        if let repository = self.repository {
+            self.title = NSLocalizedString("Edit", comment: "Edit repository constroller title")
+            self.nameTextField.text = repository.name
+            self.descriptionTextView.text = repository.repDescription ?? ""
+            self.privateSwitch.isOn = repository.isPrivate
+        } else {
+            self.title = NSLocalizedString("Create", comment: "Create repository constroller title")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,9 +39,12 @@ class CreateRepositoryViewController: UIViewController {
     func saveAction(_ sender: UIBarButtonItem) {
         guard let name = self.nameTextField.text else { return }
         guard name.characters.count > 0 else { return }
-        self.apiClient?.createRepository(name: name, description: self.descriptionTextView.text, isPrivate: self.privateSwitch.isOn, completionHandler: { (repository) in
+        
+        let completionHandler: (GitHubRepository) -> Void = { (repository) in
             print(repository)
-        }, failureHandler: { (error) in
+        }
+        
+        let failureHandler: (Error) -> Void = { (error) in
             if error is ApiError {
                 let er = error as! ApiError
                 switch er {
@@ -44,7 +56,17 @@ class CreateRepositoryViewController: UIViewController {
                 default: print(er)
                 }
             }
-        })
+        }
+        
+        if let repository = self.repository {
+            let oldName = repository.name
+            repository.name = name
+            repository.repDescription = self.descriptionTextView.text
+            repository.isPrivate = self.privateSwitch.isOn
+            self.apiClient?.editRepository(repository: repository, oldName: oldName, owner: AppSettings.shared.githubUser, completionHandler: completionHandler, failureHandler: failureHandler)
+        } else {
+            self.apiClient?.createRepository(name: name, description: self.descriptionTextView.text, isPrivate: self.privateSwitch.isOn, completionHandler: completionHandler, failureHandler: failureHandler)
+        }
     }
     /*
     // MARK: - Navigation
